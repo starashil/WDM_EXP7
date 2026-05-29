@@ -1,5 +1,5 @@
 ### EX7 Implementation of Link Analysis using HITS Algorithm
-### DATE: 
+### DATE: 27/05/2026
 ### AIM: To implement Link Analysis using HITS Algorithm in Python.
 ### Description:
 <div align = "justify">
@@ -44,16 +44,16 @@ def hits_algorithm(adjacency_matrix, max_iterations=100, tol=1.0e-6):
     
     for i in range(max_iterations):
         # Authority update
+        new_authority_scores = np.dot(adjacency_matrix.T, hub_scores)
+        new_authority_scores /= np.linalg.norm(new_authority_scores, ord=2)  # Normalizing
 
-             /*WRITE YOUR CODE HERE
-        
         # Hub update
+        new_hub_scores = np.dot(adjacency_matrix, new_authority_scores)
+        new_hub_scores /= np.linalg.norm(new_hub_scores, ord=2)  # Normalizing
 
-             /*WRITE YOUR CODE HERE
-        
         # Check convergence
-
-             /*WRITE YOUR CODE HERE
+        authority_diff = np.linalg.norm(new_authority_scores - authority_scores, ord=2)
+        hub_diff = np.linalg.norm(new_hub_scores - hub_scores, ord=2)
         
         if authority_diff < tol and hub_diff < tol:
             break
@@ -75,6 +75,23 @@ adj_matrix = np.array([
 authority, hub = hits_algorithm(adj_matrix)
 for i in range(len(authority)):
     print(f"Node {i}: Authority Score = {authority[i]:.4f}, Hub Score = {hub[i]:.4f}")
+i=0
+j=1
+for i in range(len(authority)):
+
+    for j in range(len(authority)):
+        if(authority[i]>=authority[j]):
+            out=authority[i];
+            authority[i]=authority[j]
+            authority[j]=out
+        if(hub[i]>hub[j]):
+            out=hub[i]
+            hub[i]=hub[j]
+            hub[j]=out
+
+print("Ranking based on Hub Scores:")
+for i in range(len(authority)):
+    print("Rank" ,i+1,hub[i])
 
 # bar chart of authority vs hub scores
 
@@ -94,4 +111,8 @@ plt.show()
 
 ### Output:
 
+<img width="972" height="786" alt="image" src="https://github.com/user-attachments/assets/d2bfc6f5-4167-4642-83cb-a5bb9c0d3151" />
+
+
 ### Result:
+Thus the program is executed successfully.
